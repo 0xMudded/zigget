@@ -12,7 +12,7 @@ pub fn main() !void {
     const url = args_iterator.next() orelse return ArgError.URLNotSpecified;
     const file_path = args_iterator.next() orelse return ArgError.FilePathNotSpecified;
 
-    const body: []u8 = try do_request(url);
+    const body: []u8 = try doRequest(url);
 
     var formatted_buff: [MAX_SIZE]u8 = undefined;
     const formatted = try std.fmt.bufPrint(&formatted_buff, "{s}", .{body});
@@ -22,7 +22,7 @@ pub fn main() !void {
     try file.writeAll(formatted);
 }
 
-fn do_request(url: []const u8) ![]u8 {
+fn doRequest(url: []const u8) ![]u8 {
     var gpa = std.heap.GeneralPurposeAllocator(.{}){};
     defer _ = gpa.deinit();
 
